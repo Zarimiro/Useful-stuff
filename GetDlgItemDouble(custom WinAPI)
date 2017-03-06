@@ -1,0 +1,192 @@
+double GetDlgItemDouble(HWND hDlg, int id)
+{
+	TCHAR *pEnd;
+	TCHAR szItemText[20];
+	GetDlgItemText(hDlg, id, szItemText, 20);
+	return strtod(szItemText, &pEnd);
+}
+
+void SetDlgItemDouble(HWND hDlg, int id, double VAL)
+{
+	TCHAR Bf[20];
+	_gcvt(VAL, 5, Bf);
+	SetDlgItemText(hDlg, id, Bf);
+}
+
+//И пример использования:
+
+void rounding(HWND hWnd)
+{
+	
+	double a = GetDlgItemDouble(hWnd, EDIT1);
+	double d = a;
+
+	SetDlgItemDouble(hWnd, EDIT3, d);
+}
+
+//И вся вин-апишная программа в целом:
+//Простое диалоговое окно,куда можно вводить и выводить тип double
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include<Windows.h>
+#include<math.h>
+
+#define EDIT1  110
+#define EDIT3  112
+#define BUTTON 113
+
+
+
+
+static TCHAR szWindowClass[] = ("win32app");
+static TCHAR szTitle[] = ("Calculator");
+
+													  
+LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+void rounding(HWND hWnd);
+
+
+int WINAPI WinMain(HINSTANCE hInstance,
+	HINSTANCE hPrevInstance,
+	LPSTR lpCmdLine,
+	int nCmdShow)
+{
+	
+	WNDCLASSEX wcex;
+	wcex.cbSize = sizeof(WNDCLASSEX);
+	wcex.style = CS_HREDRAW | CS_VREDRAW;
+	wcex.lpfnWndProc = WndProc;
+	wcex.cbClsExtra = 0;
+	wcex.cbWndExtra = 0;
+	wcex.hInstance = hInstance;
+	wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_APPLICATION));
+	wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+	wcex.lpszMenuName = NULL;
+	wcex.lpszClassName = szWindowClass;
+	wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_APPLICATION));
+
+	
+	if (!RegisterClassEx(&wcex))
+	{
+		MessageBox(NULL,
+			("Call to RegisterClassEx failed!"),
+			("Win32 Guided Tour"),
+			NULL);
+
+		return 1;
+	}
+
+	
+	HWND hWnd = CreateWindow(
+		szWindowClass,
+		szTitle,
+		WS_OVERLAPPEDWINDOW,
+		CW_USEDEFAULT, CW_USEDEFAULT,
+		500, 400,
+		NULL,
+		NULL,
+		hInstance,
+		NULL
+	);
+	if (!hWnd)
+	{
+		MessageBox(NULL,
+			("z4"),
+			("z3"),
+			NULL);
+
+		return 1;
+	}
+
+	
+	ShowWindow(hWnd,
+		nCmdShow);
+	UpdateWindow(hWnd);
+
+
+	MSG msg;
+	BOOL bret;
+	while ((bret = GetMessage(&msg, NULL, 0, 0)) != 0)
+	{
+		if (bret == -1) break;
+		else
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+	}
+
+	return (int)msg.wParam;
+}
+double GetDlgItemDouble(HWND hDlg, int id)
+{
+	TCHAR *pEnd;
+	TCHAR szItemText[20];
+	GetDlgItemText(hDlg, id, szItemText, 20);
+	return strtod(szItemText, &pEnd);
+}
+
+void SetDlgItemDouble(HWND hDlg, int id, double VAL)
+{
+	TCHAR Bf[20];
+	_gcvt(VAL, 5, Bf);
+	SetDlgItemText(hDlg, id, Bf);
+}
+
+
+void rounding(HWND hWnd)
+{
+	
+	double a = GetDlgItemDouble(hWnd, EDIT1);
+
+	double d = a;
+	
+
+	
+
+	
+	SetDlgItemDouble(hWnd, EDIT3, d);
+}
+
+LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_CREATE:
+		
+		CreateWindowEx(WS_EX_CLIENTEDGE, TEXT("EDIT"), TEXT(""),
+			WS_CHILD | WS_VISIBLE | ES_AUTOHSCROLL | WS_TABSTOP,
+			20, 10, 85, 25, hWnd, HMENU(EDIT1), GetModuleHandle(NULL), NULL);
+
+
+		CreateWindowEx(WS_EX_CLIENTEDGE, TEXT("EDIT"), TEXT(""),
+			WS_CHILD | WS_VISIBLE | ES_AUTOHSCROLL | WS_TABSTOP,
+			20, 85, 85, 25, hWnd, HMENU(EDIT3), GetModuleHandle(NULL), NULL);
+
+		
+		CreateWindowEx(NULL, TEXT("BUTTON"), TEXT("Round"),
+			WS_CHILD | WS_VISIBLE | BS_DEFPUSHBUTTON | WS_TABSTOP,
+			20, 45, 60, 30, hWnd, HMENU(BUTTON), GetModuleHandle(NULL), NULL);
+
+		break;
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		break;
+	case WM_COMMAND:
+		switch (LOWORD(wParam))
+		{
+		case BUTTON:
+			rounding(hWnd);
+			return 1;
+		}
+		break;
+	default:
+		return DefWindowProc(hWnd, message, wParam, lParam);
+		break;
+	}
+
+	return 0;
+}
+

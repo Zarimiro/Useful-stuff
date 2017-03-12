@@ -1,0 +1,105 @@
+
+#include "stdafx.h"
+#include<string>
+#include <fstream>
+#include<iostream>
+#include<conio.h>
+#include<list>
+
+
+using namespace std;
+int main()
+{
+	unsigned i = 1;
+	unsigned j = 1;
+	string buf;
+	string buf2;
+	ifstream file1("file1.txt");
+	ifstream file2("file2.txt");
+  
+  
+  //эти файлики тхт содержатся в папке проекта
+  
+  
+	unsigned x = 1;
+	unsigned y = 1;
+	cout << "file1:" << endl;
+	list<string> list1;
+	while (!file1.eof())
+	{
+		getline(file1, buf);
+		cout << buf << endl;
+		list1.push_back(buf);
+		++x;
+	}
+	cout << (x - 1) << " strings in total" << endl;
+
+	//	cout << "List1:" << endl;
+		//for (list<string>::iterator it = list1.begin(); it != list1.end(); it++)
+		//	cout << *it << endl;
+
+
+//получение строки и запись ее в список, чуть выше также способ представить весь список наглядно.
+
+	cout << "\nfile2:" << endl;
+	list<string> list2;
+	while (!file2.eof())
+	{
+		getline(file2, buf2);
+		cout << buf2 << endl;
+		list2.push_back(buf2);
+		++y;
+	}
+	cout << (y - 1) << " strings in total" << endl;
+
+	//cout << "List2:" << endl;
+	//for (list<string>::iterator it2 = list2.begin(); it2 != list2.end(); it2++)
+		//cout << *it2 << endl;
+
+	list<string>::iterator it3 = list1.begin();
+	list<string>::iterator it4 = list2.begin();
+
+
+	for(j=1;j<x;j++){
+		it4 = list2.begin();
+	for (i = 1; i < y; i++) {
+		if (*it3 == *it4) break;
+		else if (i == (y - 1)) break;
+		else it4++;
+	}
+	if (i == (y - 1)) {
+		if (*it3 != *it4) {
+			cout << "\nfile 1 " << j << " " << *it3;
+		}
+	}
+	it3++;
+}
+	
+  
+  // Тут пример работы с этими самыми строками. Идет построчное сравнение итераторов и в случае, если файл1 содержит строку,которой
+  нету во втором файле, она это выводит. Ну а ниже соответсвенно наоборот.
+  
+  
+  
+	it3 = list2.begin();
+	it4 = list2.begin();
+	
+
+	for (j = 1; j<y; j++) {
+		it3 = list1.begin();
+		for (i = 1; i < x; i++) {
+			if (*it4 == *it3) break;
+			else if (i == (x - 1)) break;
+			else it3++;
+		}
+		if (i == (x - 1)) {
+			if (*it4 != *it3) {
+				cout << "\nfile 2 " << j << " " << *it4;
+			}
+		}
+		it4++;
+	}
+	_getch();
+    return 0;
+}
+

@@ -1,0 +1,69 @@
+#include<iostream>
+#include<conio.h>
+using namespace std;
+
+class Instruments {
+protected:
+	unsigned manuf;
+	unsigned quality;
+public:
+
+	Instruments() {
+	 manuf = quality = 0;
+	}
+
+	Instruments(unsigned buf_manuf, unsigned buf_quality)
+	{
+		this->manuf = buf_manuf;
+		this->quality = buf_quality;
+	}
+
+	void setInstrum(unsigned buf_manuf, unsigned buf_quality)
+	{
+		this->manuf = buf_manuf;
+		this->quality = buf_quality;
+		cout << endl << "this is basic function";
+	}
+
+	virtual void getInstrum() { //virtual function
+		cout << endl << "Manufactured in:" << manuf << endl << "Overall nowaday quality:" << quality <<endl<<"this is basic function"<< endl;
+	}
+	~Instruments() {}
+};
+
+class ProInstruments :public Instruments {
+public:
+	ProInstruments() :Instruments() {}
+	ProInstruments(unsigned buf2_manuf, unsigned buf2_quality):Instruments(buf2_manuf,buf2_quality){}//Constructor inheritance
+	
+	void setInstrum(unsigned buf_manuf, unsigned buf_quality) //static polymorphism
+		//aka overriddence of function setInstrum(will trigger this in case obj is from Proinstrum)
+	{
+		this->manuf = buf_manuf;
+		this->quality = buf_quality;
+		cout << endl << "this is overridden unction" << endl;
+	}
+
+	void getInstrum() { //dynamic polymorphism
+		//aka overiddence of virtual function(example of trigger is below in main)
+		cout << endl << "Manufactured in:" << manuf << endl << "Overall nowaday quality:" << quality << endl<<"proinstrum function";
+	}
+	~ProInstruments(){}
+};
+
+int main() {
+
+	Instruments Instrum;
+	ProInstruments ProInstrum;
+	cout << "Static polymorphism:" << endl;
+	Instrum.setInstrum(2,3);
+	ProInstrum.setInstrum(2,3);
+	cout <<endl<< "Dynamic polymorphism:" << endl;
+	Instruments *p;
+	p = &Instrum;
+	p->getInstrum();
+	p = &ProInstrum;
+	p->getInstrum();
+	_getch();
+	return 0;
+}

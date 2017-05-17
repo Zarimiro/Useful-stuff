@@ -1,0 +1,8 @@
+#include<cctype>
+char str[64];
+				cin >> str;
+				int new_num;
+				if (isdigit(str[0])) {
+					new_num = atoi(str);
+					cout << new_num;
+				}

@@ -1,0 +1,11 @@
+std::string s = "ddadsadwd 133 dsdggf";
+	string buf = s;
+	size_t digits = buf.find_first_of("1234567890+-");
+	cout <<endl<< digits;
+		std::cout << "Number found: " << atoi(buf.c_str() + digits) << std::endl;
+		int x = atoi(buf.c_str() + digits);
+		cout << endl << x << endl;
+		char str[11];
+		sprintf_s(str, "%d", x);
+		cout << strlen(str);
+    //по какой то причине не работает в функциях в классе

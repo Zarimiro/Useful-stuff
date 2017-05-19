@@ -1,0 +1,7 @@
+#include<sstream>
+int x,r;
+stringstream stream;
+			stream << x << r;
+			int c;
+			stream >> c;
+			cout << c;

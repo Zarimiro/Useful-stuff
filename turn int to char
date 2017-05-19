@@ -1,0 +1,3 @@
+char strr[11];
+			sprintf_s(strr, "%d", c);
+			cout << strlen(strr);

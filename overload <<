@@ -1,0 +1,23 @@
+//есть класс Сomplex.
+//....
+void print(ostream &) {
+
+		cout << "\nComplex number: " << real(number)<<" + "<<imag(number)<<"i";
+	}
+  //
+  //
+  friend ostream & operator <<(ostream&, const Complex<T>& );
+	
+};
+template<typename T>
+ostream & operator <<(ostream& out, const Complex<T>& d) {
+	d.print(out);
+	return out;
+}
+int main(){
+Complex C;
+//
+//
+cout<<C;//should work
+}
+  

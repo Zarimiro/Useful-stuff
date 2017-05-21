@@ -1,0 +1,61 @@
+	//upstairs are class,functions print and set and so on
+  friend ostream & operator <<(ostream&, const Complex<T>& );
+	friend istream& operator >> (istream&, Complex<T>&);
+
+	Complex operator +(const Complex& c) {
+		Complex buf(*this);
+		buf.number += c.number;
+		return buf;
+	}
+	Complex operator -(const Complex& c) {
+		Complex buf(*this);
+		buf.number -= c.number;
+		return buf;
+	}
+	Complex operator *(const Complex& c) {
+		Complex buf(*this);
+		buf.number *= c.number;
+		return buf;
+	}
+	Complex operator /(const Complex& c) {
+		Complex buf(*this);
+		buf.number /= c.number;
+		return buf;
+	}
+	Complex operator +=(const Complex& c) {
+		number += c.number;
+		return *this;
+	}
+	Complex operator -=(const Complex& c) {
+		number -= c.number;
+		return *this;
+	}
+	Complex operator *=(const Complex& c) {
+		number *= c.number;
+		return *this;
+	}
+	Complex operator /=(const Complex& c) {
+		number /= c.number;
+		return *this;
+	}
+	Complex operator =(const Complex& c) {
+		number = c.number;
+		return *this;
+	}
+	bool operator ==(const Complex& c) {
+		if(this->number==c.number)
+		return true;
+		else return false;
+	}
+	
+};
+template<typename T>
+ostream & operator <<(ostream& out, const Complex<T>& d) {
+	d.print(out);
+	return out;
+}
+template<typename T>
+istream & operator >>(istream& in, const Complex<T>& d) {
+	d.set(in);
+	return in;
+}

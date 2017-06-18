@@ -1,0 +1,3 @@
+cout<<hex<<x;  //hexadecimal
+cout<<oct<<x;  //octal
+cout<<dec<<x;  //decimal
